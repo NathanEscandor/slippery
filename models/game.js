@@ -2,7 +2,10 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 
 const Game = mongoose.model('Game', new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true
+  },
   dateCreated: { 
     type: Date, 
     default: Date.now 
@@ -20,6 +23,9 @@ const Game = mongoose.model('Game', new mongoose.Schema({
     type: Object,
     required: true
   },
+  path: {
+    type: String
+  },
   stats: {
     type: Object,
     required: true
@@ -30,7 +36,8 @@ function validateGame(game) {
   const schema = {
     name: Joi.string().min(2).max(50),
     isDeleted: Joi.boolean(),
-    tags: Joi.string().min(2).max(50)
+    tags: Joi.string().min(2).max(50),
+    path: Joi.string().min(16).max(32)
   };
 
   return Joi.validate(game, schema);
