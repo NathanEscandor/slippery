@@ -5,13 +5,13 @@ const { default: SlippiGame } = require('slp-parser-js');
  * to mongodb.
  */
 
-export class GameLoader {
+const gameloader = class GameLoader {
   constructor(slp_file) {
-    const game = new SlippiGame(slp_file)
+    const game = new SlippiGame('test.slp')
 
     const settings = game.getSettings()
     const metadata = game.getMetadata()
-    const stats = game.getStats() //note: want stats.overall
+    const stats = game.getStats().overall //note: want stats.overall
 
   }
 
