@@ -36,4 +36,17 @@ router.post('/uploads', upload.single('slp_file'), async(req, res) => {
   game = await game.save();
 });
 
+//I think I should only be able to update name, tags, and isDeleted.
+router.put('/:id', async(req, res) => {
+  let game = await Game.findById(req.params.id);
+  if (!game) return;
+
+  game.name = req.body.name || game.name;
+  game.tags = req.body.tags || game.tags;
+  game.isDeleted = req.body.isDeleted || game.isDeleted;
+
+  const result = await game.save();
+  res.send(result);
+});
+
 module.exports = router;
