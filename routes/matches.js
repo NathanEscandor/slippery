@@ -19,6 +19,19 @@ router.post('/', async(req, res) => {
   res.send(match);
 });
 
+router.put('/:id', async(req, res) => {
+  let match = await Match.findById(req.params.id);
+  if (!match) return;
+
+  match.name = req.body.name || match.name;
+  match.tags = req.body.tags || match.tags;
+  match.games = req.body.games || match.games;
+  match.isDeleted = req.body.isDeleted || match.isDeleted;
+
+  const result = await match.save();
+  res.send(result);
+});
+
 // router.post('/uploads', upload.single('slp_file'), async(req, res) => {
 //   try {
 //     res.send(req.file);
@@ -40,19 +53,6 @@ router.post('/', async(req, res) => {
 //   });
 
 //   game = await game.save();
-// });
-
-// //I think I should only be able to update name, tags, and isDeleted.
-// router.put('/:id', async(req, res) => {
-//   let game = await Game.findById(req.params.id);
-//   if (!game) return;
-
-//   game.name = req.body.name || game.name;
-//   game.tags = req.body.tags || game.tags;
-//   game.isDeleted = req.body.isDeleted || game.isDeleted;
-
-//   const result = await game.save();
-//   res.send(result);
 // });
 
 module.exports = router;
