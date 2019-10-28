@@ -1,8 +1,7 @@
-const jwt = require('jsonwebtoken');
-const config = require('config');
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-const {User, validate} = require('../models/user');
+const Joi = require('joi');
+const { User } = require('../models/user');
 
 // Was originally going to call this Set and Sets, but it appears that
 // "Set" is a protected variable name in JS
@@ -17,29 +16,25 @@ router.post('/', async(req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   let user = await User.findOne({ email: req.body.email });
-  if (user) return res.status(400).send(`User with email ${req.body.email} already registered`);
+  if (!user) return res.status(400).send('Invalid email or password');
 
-  user = new User({ 
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password
-  });
+  const validPassword = await bcrypt.compare(req.body.password, user.password);
+  if (!validPassword) return res.status(400).send('Invalid email or password');
 
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(user.password, salt);
-
-  user.password = hashedPassword;
-
-  user = await user.save();
-
+  //returning with a JSON web token
+  // const token = jwt.sign({ _id: user._id }, 'jwtPrivateKey');
   const token = user.generateAuthToken();
-  res
-  .header('x-auth-token', token)
-  .send({
-    name: user.name,
-    email: user.email
-  });
+  res.send(token);
 });
+
+function validate(req) {
+  const schema = {
+    email: Joi.string().min(5).max(360).required().email(),
+    password: Joi.string().min(5).max(255).required()
+  };
+
+  return Joi.validate(req, schema);
+}
 
 // router.get('/:id', async(req, res) => {
 //   const match = await Match.findById(req.params.id); //NJE: what if this fails?
