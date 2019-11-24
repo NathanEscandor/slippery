@@ -6,10 +6,14 @@ var logger = require('morgan');
 
 var app = express();
 
+var MongoDBUtil = require('./modules/mongodb/mongodb.module').MongoDBUtil;
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
+
+MongoDBUtil.init();
 
 app.get('/', function (req, res) {
     var pkg = require(path.join(__dirname, 'package.json'));
@@ -39,5 +43,7 @@ app.use(function (err, req, res, next) {
         error: res.locals.error
     });
 });
+
+
 
 module.exports = app;
