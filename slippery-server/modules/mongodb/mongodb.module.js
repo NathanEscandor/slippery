@@ -2,6 +2,7 @@
   'use strict';
 
   module.exports = {
-    //here, we declar attributes that will be exposed to other modules
+    //here, we declare attributes that will be exposed to other modules
+    MongoDBUtil: require('./mongodb.util')
   };
 }) ();
