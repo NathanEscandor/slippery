@@ -25,6 +25,10 @@ describe('GameModule', function () {
     it('should confirm that GameService object exists', function() {
       expect(GameModule().GameService).to.be.a('object');
     });
+
+    it('should confirm that GameModel function exists', function() {
+      expect(GameModule().GameModel).to.be.a('function');
+    });
   });
 
 });
