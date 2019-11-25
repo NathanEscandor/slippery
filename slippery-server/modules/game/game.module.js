@@ -5,6 +5,8 @@
   module.exports = init;
 
   function init() {
-    return {}
+    return {
+      GameController: require('./game.controller')
+    }
   }
 }) ();
