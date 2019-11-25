@@ -7,7 +7,8 @@
   function init() {
     return {
       GameController: require('./game.controller'),
-      GameMiddleware: require('./game.middleware')
+      GameMiddleware: require('./game.middleware'),
+      GameService: require('./game.service')
     }
   }
 }) ();

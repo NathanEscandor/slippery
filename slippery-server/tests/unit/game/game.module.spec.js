@@ -21,6 +21,10 @@ describe('GameModule', function () {
     it('should confirm that GameMiddleware object exists', function() {
       expect(GameModule().GameMiddleware).to.be.a('object');
     });
+
+    it('should confirm that GameService object exists', function() {
+      expect(GameModule().GameService).to.be.a('object');
+    });
   });
 
 });
