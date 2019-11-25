@@ -1,1 +1,10 @@
-{}
+{
+  "name": "mang0 vs Armada",
+  "dateCreated": "1574706577252",
+  "isDeleted": false,
+  "tags": ["genesis", "melee"],
+  "path": "./fake_file",
+  "settings": {"p1": "falco", "p4": "peach"},
+  "metadata": {"stage": "battlefield"},
+  "stats": {"l-cancel rate": "0.98"}
+}
