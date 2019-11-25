@@ -14,7 +14,7 @@ describe('GameModule', function () {
       expect(GameModule()).to.be.a('object');
     });
 
-    it('should confirm that GameModule function exists', function() {
+    it('should confirm that GameController function exists', function() {
       expect(GameModule().GameController).to.be.a('function');
     });
 
