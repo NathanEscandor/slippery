@@ -17,6 +17,10 @@ describe('GameModule', function () {
     it('should confirm that GameModule function exists', function() {
       expect(GameModule().GameController).to.be.a('function');
     });
+
+    it('should confirm that GameMiddleware object exists', function() {
+      expect(GameModule().GameMiddleware).to.be.a('object');
+    });
   });
 
 });
