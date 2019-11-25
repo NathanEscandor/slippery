@@ -1,18 +1,18 @@
 'use strict';
 
-let chai = require('chai');
-let expect = chai.expect;
-let sinon = require('sinon');
+const chai = require('chai');
+const expect = chai.expect;
+const sinon = require('sinon');
 
-let mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-let GameModule = require('../../../modules/game/game.module')();
-let GameModel = GameModule.GameModel;
-let GameService = GameModule.GameService;
+const GameModule = require('../../../modules/game/game.module')();
+const GameModel = GameModule.GameModel;
+const GameService = GameModule.GameService;
 
-let Fixtures = require('../../fixtures/fixtures');
-let GameFixture = Fixtures.GameFixture;
-let ErrorFixture = Fixtures.ErrorFixture;
+const Fixtures = require('../../fixtures/fixtures');
+const GameFixture = Fixtures.GameFixture;
+const ErrorFixture = Fixtures.ErrorFixture;
 
 let GameModelMock;
 
@@ -46,6 +46,22 @@ describe('GameService', function () {
           GameModelMock.verify();
           expect(data).to.deep.equal(expectedCreatedGame);
         });
+    });
+
+    it('should throw an error while creating a game', function () {
+      newGame = GameFixture.newGame;
+      expectedError = ErrorFixture.unknownError;
+
+      GameModelMock.expects('create')
+        .withArgs(newGame)
+        .rejects(expectedError);
+
+      return GameService.createGame(newGame)
+        .catch(function (error) {
+          GameModelMock.verify();
+          expect(error).to.deep.equal(expectedError)
+        });
+
     });
   });
 
