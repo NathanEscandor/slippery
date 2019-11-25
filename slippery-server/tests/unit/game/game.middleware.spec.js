@@ -52,6 +52,22 @@ describe('GameMiddleware', function () {
         sinon.assert.callCount(next, 1);
       });
     });
+
+    it('should throw error while creating a game', function() {
+      expectedError = ErrorFixture.unknownError;
+
+      createGamePromise = Promise.reject(expectedError);
+      createGame.withArgs(req.body).returns(createGamePromise);
+
+      GameMiddleware.addGame(req, res, next);
+
+      sinon.assert.callCount(createGame, 1);
+
+      return createGamePromise.catch(function (error) {
+        expect(error).to.be.a('object');
+        expect(error).to.deep.equal(expectedError);
+      });
+    });
     
   });
 });
