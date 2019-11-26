@@ -15,7 +15,8 @@ const GameFixture = Fixtures.GameFixture;
 const baseUri = '/games';
 
 let testData = {
-  existingGame: {}
+  existingGame: {},
+  modifiedGame: GameFixture.modifiedGame
 };
 
 describe('GameController', function () {
@@ -67,4 +68,23 @@ describe('GameController', function () {
         });
     });
   })
+
+  describe("PUT " + baseUri + "/:gameId", function () {
+    it('should modify an existing game', function (done) {
+      testData.modifiedGame._id = testData.existingGame._id;
+
+      request(app)
+        .put(baseUri + '/' + testData.modifiedGame._id)
+        .send(testData.modifiedGame)
+        .end(function (err, res) {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.not.equal(undefined);
+          expect(res.body.name).to.equal(testData.modifiedGame.name);
+          expect(res.body.settings.p3).to.equal(testData.modifiedGame.settings.p3);
+
+          done();
+        });
+
+    });
+  });
 });

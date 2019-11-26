@@ -1,11 +1,11 @@
 {
   "_id": "507f1f77bc420cd699439011",
-  "name": "mang0 vs Armada",
+  "name": "mang0 vs ppmd",
   "dateCreated": "1574706527252",
   "isDeleted": false,
   "tags": ["big house", "melee"],
   "path": "./fake_file",
-  "settings": {"p1": "falco", "p3": "peach"},
+  "settings": {"p1": "fox", "p3": "falco"},
   "metadata": {"stage": "final destination"},
   "stats": {"l-cancel rate": "0.96"},
   "__v": 0
