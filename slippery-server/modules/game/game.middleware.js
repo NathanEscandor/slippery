@@ -3,7 +3,8 @@
 
   module.exports = {
     addGame: addGame,
-    getGames: getGames
+    getGames: getGames,
+    getGameById: getGameById
   };
   const GameService = require('./game.module')().GameService;
 
@@ -34,6 +35,16 @@
 
     function fail(error) {
       next(error);
+    }
+  }
+
+  function getGameById(req, res, next) {
+    GameService.fetchGameById(req.params.gameId)
+      .then(success);
+
+    function success(data) {
+      req.response = data;
+      next();
     }
   }
 }) ();
