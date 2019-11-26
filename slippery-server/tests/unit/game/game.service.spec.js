@@ -135,4 +135,24 @@ describe('GameService', function () {
         });
     });
   });
+
+  describe('updateGame', function () {
+    let existingGame, expectedModifiedGame, expectedError;
+
+    it('should update game', function () {
+      expectedModifiedGame = GameFixture.modifiedGame;
+      existingGame = GameFixture.createdGame;
+
+      GameModelMock.expects('findByIdAndUpdate')
+        .withArgs(existingGame._id, existingGame, {new: true})
+        .chain('exec')
+        .resolves(expectedModifiedGame);
+
+      return GameService.updateGame(existingGame._id, existingGame)
+        .then(function (data) {
+          GameModelMock.verify();
+          expect(data).to.deep.equal(expectedModifiedGame);
+        });
+    });
+  });
 });
