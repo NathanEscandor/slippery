@@ -82,7 +82,7 @@ describe('GameMiddleware', function () {
       fetchGames.restore();
     });
 
-    it('should successfully get all games', function() {
+    it('should successfully get all g mes', function() {
       expectedGames = GameFixture.games;
 
       fetchGamesPromise = Promise.resolve(expectedGames);

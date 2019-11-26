@@ -98,6 +98,25 @@ describe('GameService', function () {
           expect(error).to.deep.equal(expectedError);
         });
     });
+  });
 
+  describe('fetchCustomerById', function() {
+    let expectedFetchedGame, gameId, expectedError;
+
+    it('should fetch game by id', function () {
+      expectedFetchedGame = GameFixture.createdGame;
+      gameId = expectedFetchedGame._id;
+
+      GameModelMock.expects('findById')
+        .withArgs(gameId)
+        .chain('exec')
+        .resolves(expectedFetchedGame);
+
+      return GameService.fetchGameById(gameId)
+        .then(function (data) {
+          GameModelMock.verify();
+          expect(data).to.deep.equal(expectedFetchedGame);
+        });
+    })
   });
 });
