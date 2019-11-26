@@ -1,5 +1,6 @@
 (function() {
   const mongoose = require('mongoose');
+  mongoose.set('useFindAndModify', false);
   const Schema = mongoose.Schema;
 
   const GameSchema = new Schema({
