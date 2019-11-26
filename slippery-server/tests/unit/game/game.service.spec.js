@@ -84,5 +84,20 @@ describe('GameService', function () {
         });
     });
 
+    it('should be able to throw an error while fetching all games', function () {
+      expectedError = ErrorFixture.unknownError;
+
+      GameModelMock.expects('find')
+        .withArgs({})
+        .chain('exec')
+        .rejects(expectedError);
+      
+      return GameService.fetchGames()
+        .catch(function (error) {
+          GameModelMock.verify();
+          expect(error).to.deep.equal(expectedError);
+        });
+    });
+
   });
 });
