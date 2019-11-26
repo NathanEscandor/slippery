@@ -20,7 +20,7 @@ let testData = {
 };
 
 describe('GameController', function () {
-  describe("POST " + baseUri, function() {
+  describe('POST ' + baseUri, function() {
     it('should add new game', function (done) {
       request(app)
         .post(baseUri)
@@ -36,7 +36,7 @@ describe('GameController', function () {
     });
   });
 
-  describe("GET " + baseUri, function() {
+  describe('GET ' + baseUri, function() {
     it('should get all games', function(done) {
       request(app)
         .get(baseUri)
@@ -54,7 +54,7 @@ describe('GameController', function () {
     });
   })
 
-  describe("GET " + baseUri + "/:gameId", function() {
+  describe('GET ' + baseUri + '/:gameId', function() {
     it('should get game by id', function(done) {
       request(app)
         .get(baseUri + '/' + testData.existingGame._id)
@@ -69,7 +69,7 @@ describe('GameController', function () {
     });
   })
 
-  describe("PUT " + baseUri + "/:gameId", function () {
+  describe('PUT ' + baseUri + '/:gameId', function () {
     it('should modify an existing game', function (done) {
       testData.modifiedGame._id = testData.existingGame._id;
 
@@ -88,7 +88,7 @@ describe('GameController', function () {
     });
   });
 
-  describe("DELETE " + baseUri + "/:gameId", function () {
+  describe('DELETE ' + baseUri + '/:gameId', function () {
     it('should remove an existing game', function (done) {
       request(app)
         .delete(baseUri + '/' + testData.existingGame._id)
