@@ -171,4 +171,23 @@ describe('GameService', function () {
         })
     })
   });
+
+  describe('deleteGame', function () {
+    let existingGame, expectedError;
+
+    it('should remove game', function () {
+      existingGame = GameFixture.createdGame;
+
+      GameModelMock.expects('findByIdAndRemove')
+        .withArgs(existingGame._id)
+        .chain('exec')
+        .resolves(existingGame);
+
+      return GameService.deleteGame(existingGame._id)
+        .then(function (data) {
+          GameModelMock.verify();
+          expect(data).to.deep.equal(existingGame);
+        });
+    });
+  });
 });
