@@ -56,11 +56,16 @@
 
   function modifyGame(req, res, next) {
     GameService.updateGame(req.params.gameId, req.body)
-      .then(success);
+      .then(success)
+      .catch(fail);
 
     function success(data) {
       req.response = data;
       next();
+    }
+
+    function fail(error) {
+      next(error);
     }
   }
 }) ();

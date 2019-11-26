@@ -191,6 +191,22 @@ describe('GameMiddleware', function () {
         expect(req.response).to.deep.equal(expectedModifiedGame);
         sinon.assert.callCount(next, 1);
       });
-    })
+    });
+
+    it('should be able to throw an error while modifying game by id', function () {
+      expectedError = ErrorFixture.unknownError;
+
+      updateGamePromise = Promise.reject(expectedError);
+      updateGame.withArgs(req.params.gameId, req.body).returns(updateGamePromise);
+
+      GameMiddleware.modifyGame(req, res, next);
+
+      sinon.assert.callCount(updateGame, 1);
+
+      return updateGamePromise.catch(function (error) {
+        expect(error).to.be.a('object');
+        expect(error).to.deep.equal(expectedError);
+      });
+    });
   });
 });
