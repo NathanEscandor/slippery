@@ -30,4 +30,19 @@ describe('GameController', function () {
         });
     });
   });
+
+  describe("GET " + baseUri, function() {
+    it('should get all games', function(done) {
+      request(app)
+        .get(baseUri)
+        .end(function (err, res) {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.not.equal(undefined);
+          expect(res.body).to.be.a('array');
+          expect(res.body.length).to.not.equal(0);
+
+          done();
+        });
+    });
+  })
 });
