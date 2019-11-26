@@ -87,4 +87,18 @@ describe('GameController', function () {
 
     });
   });
+
+  describe("DELETE " + baseUri + "/:gameId", function () {
+    it('should remove an existing game', function (done) {
+      request(app)
+        .delete(baseUri + '/' + testData.existingGame._id)
+        .end(function (err, res) {
+          expect(res.status).to.equal(200);
+          expect(res.body.name).to.not.equal(undefined);
+          expect(res.body.name).to.equal(testData.existingGame.name);
+
+          done();
+        })
+    });
+  })
 });
