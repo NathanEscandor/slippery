@@ -118,5 +118,21 @@ describe('GameService', function () {
           expect(data).to.deep.equal(expectedFetchedGame);
         });
     })
+
+    it('should be able to throw an error while fetching game by id', function () {
+      gameId = GameFixture.createdGame._id;
+      expectedError = ErrorFixture.unknownError;
+
+      GameModelMock.expects('findById')
+        .withArgs(gameId)
+        .chain('exec')
+        .rejects(expectedError);
+      
+      return GameService.fetchGameById(gameId)
+        .catch(function (error) {
+          GameModelMock.verify();
+          expect(error).to.deep.equal(expectedError);
+        });
+    });
   });
 });
