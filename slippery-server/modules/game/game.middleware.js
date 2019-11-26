@@ -2,7 +2,8 @@
   'use strict';
 
   module.exports = {
-    addGame: addGame
+    addGame: addGame,
+    getGames: getGames
   };
   const GameService = require('./game.module')().GameService;
 
@@ -18,6 +19,16 @@
 
     function fail(error) {
       next(error);
+    }
+  }
+
+  function getGames(req, res, next) {
+    GameService.fetchGames()
+      .then(success);
+
+    function success(data) {
+      req.response = data;
+      next();
     }
   }
 }) ();

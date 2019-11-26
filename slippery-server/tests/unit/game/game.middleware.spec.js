@@ -68,6 +68,37 @@ describe('GameMiddleware', function () {
         expect(error).to.deep.equal(expectedError);
       });
     });
-    
+  });
+
+  describe('getGames', function () {
+    let fetchGames, fetchGamesPromise, expectedGames, expectedError;
+
+    beforeEach(function () {
+      fetchGames = sinon.stub(GameService, 'fetchGames');
+      req.body = {};
+    });
+
+    afterEach(function () {
+      fetchGames.restore();
+    });
+
+    it('should successfully get all games', function() {
+      expectedGames = GameFixture.games;
+
+      fetchGamesPromise = Promise.resolve(expectedGames);
+      fetchGames.returns(fetchGamesPromise);
+
+      GameMiddleware.getGames(req, res, next);
+
+      sinon.assert.callCount(fetchGames, 1);
+
+      return fetchGamesPromise.then(function() {
+        expect(req.response).to.be.a('array');
+        expect(req.response.length).to.equal(expectedGames.length);
+        expect(req.response).to.deep.equal(expectedGames);
+        sinon.assert.callCount(next, 1);
+      });
+
+    });
   });
 });
