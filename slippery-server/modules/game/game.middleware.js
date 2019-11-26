@@ -72,11 +72,16 @@
 
   function removeGame(req, res, next) {
     GameService.deleteGame(req.params.gameId)
-      .then(success);
+      .then(success)
+      .catch(fail);
 
     function success(data) {
       req.response = data;
       next();
+    }
+
+    function fail(error) {
+      next(error);
     }
   }
 }) ();
