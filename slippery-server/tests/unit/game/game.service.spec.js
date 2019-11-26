@@ -189,5 +189,21 @@ describe('GameService', function () {
           expect(data).to.deep.equal(existingGame);
         });
     });
+
+    it('should be able to throw error while removing game', function () {
+      expectedError = ErrorFixture.unknownError;
+      existingGame = GameFixture.createdGame;
+
+      GameModelMock.expects('findByIdAndRemove')
+        .withArgs(existingGame._id)
+        .chain('exec')
+        .rejects(expectedError);
+
+      return GameService.deleteGame(existingGame._id)
+        .catch(function (error) {
+          GameModelMock.verify();
+          expect(error).to.deep.equal(expectedError);
+        });
+    });
   });
 });
