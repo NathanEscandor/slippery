@@ -95,7 +95,7 @@ describe('GameController', function () {
         .end(function (err, res) {
           expect(res.status).to.equal(200);
           expect(res.body.name).to.not.equal(undefined);
-          expect(res.body.name).to.equal(testData.existingGame.name);
+          expect(res.body.name).to.equal(testData.modifiedGame.name);
 
           done();
         })
