@@ -3,6 +3,7 @@
 const chai = require('chai');
 const expect = chai.expect;
 const sinon = require('sinon');
+require('sinon-mongoose');
 
 const mongoose = require('mongoose');
 
@@ -65,4 +66,23 @@ describe('GameService', function () {
     });
   });
 
+  describe('fetchGames', function () {
+    let expectedGames, expectedError;
+    
+    it('should successfully fetch all games', function () {
+      expectedGames = GameFixture.games;
+
+      GameModelMock.expects('find')
+        .withArgs({})
+        .chain('exec')
+        .resolves(expectedGames);
+
+      return GameService.fetchGames()
+        .then(function (data) {
+          GameModelMock.verify();
+          expect(data).to.deep.equal(expectedGames);
+        });
+    });
+
+  });
 });
