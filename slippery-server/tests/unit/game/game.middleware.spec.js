@@ -162,4 +162,35 @@ describe('GameMiddleware', function () {
       });
     })
   });
+
+  describe('modifyGame', function () {
+    let updateGame, updateGamePromise, expectedModifiedGame, expectedError;
+
+    beforeEach(function () {
+      updateGame = sinon.stub(GameService, 'updateGame');
+      req.body = GameFixture.modifiedGame;
+      req.params.gameId = req.body._id;
+    });
+
+    afterEach(function () {
+      updateGame.restore();
+    });
+
+    it('should modify the game details', function () {
+      expectedModifiedGame = GameFixture.modifiedGame;
+
+      updateGamePromise = Promise.resolve(expectedModifiedGame);
+      updateGame.withArgs(req.params.gameId, req.body).returns(updateGamePromise);
+
+      GameMiddleware.modifyGame(req, res, next);
+
+      sinon.assert.callCount(updateGame, 1);
+
+      return updateGamePromise.then(function () {
+        expect(req.response).to.be.a('object');
+        expect(req.response).to.deep.equal(expectedModifiedGame);
+        sinon.assert.callCount(next, 1);
+      });
+    })
+  });
 });

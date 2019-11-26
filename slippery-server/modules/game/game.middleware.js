@@ -4,7 +4,8 @@
   module.exports = {
     addGame: addGame,
     getGames: getGames,
-    getGameById: getGameById
+    getGameById: getGameById,
+    modifyGame: modifyGame
   };
   const GameService = require('./game.module')().GameService;
 
@@ -50,6 +51,16 @@
 
     function fail(error) {
       next(error);
+    }
+  }
+
+  function modifyGame(req, res, next) {
+    GameService.updateGame(req.params.gameId, req.body)
+      .then(success);
+
+    function success(data) {
+      req.response = data;
+      next();
     }
   }
 }) ();
