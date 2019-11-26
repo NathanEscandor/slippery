@@ -1,0 +1,3 @@
+Software Design Documentation
+
+- I will use this folder to document the approach used and decisions made in this project

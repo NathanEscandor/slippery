@@ -1,0 +1,27 @@
+{
+  "name": "slippery-server",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "mocha --recursive ./tests --watch ./modules"
+  },
+  "dependencies": {
+    "bluebird": "^3.7.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "mongodb": "^3.3.4",
+    "mongoose": "^5.7.12",
+    "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.2",
+    "node-mocks-http": "^1.8.0",
+    "sinon": "^7.5.0",
+    "sinon-mongoose": "^2.3.0"
+  }
+}

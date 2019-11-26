@@ -1,0 +1,8 @@
+{
+  "mongodb": {
+    "server": "localhost:32770",
+    "database": "slippery_db_dev",
+    "user": null,
+    "password": null
+  }
+}

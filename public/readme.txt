@@ -1,1 +1,0 @@
-static public files go here
