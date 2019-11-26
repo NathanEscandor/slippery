@@ -117,7 +117,7 @@ describe('GameMiddleware', function () {
     })
   });
 
-  describe('getCustomerById', function () {
+  describe('getGameById', function () {
     let fetchGameById, fetchGameByIdPromise, expectedGame, expectedError;
 
     beforeEach(function () {

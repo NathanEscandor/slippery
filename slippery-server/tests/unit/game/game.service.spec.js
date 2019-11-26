@@ -100,7 +100,7 @@ describe('GameService', function () {
     });
   });
 
-  describe('fetchCustomerById', function() {
+  describe('fetchGameById', function() {
     let expectedFetchedGame, gameId, expectedError;
 
     it('should fetch game by id', function () {
