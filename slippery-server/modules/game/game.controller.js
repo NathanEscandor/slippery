@@ -18,7 +18,13 @@
     function (req, res) {
       res.status(200).json(req.response);
     }
-  )
+  );
+
+  router.get('/:gameId',
+    GameMiddleware.getGameById,
+    function (req, res) {
+      res.status(200).json(req.response);
+    })
 
   module.exports = router;
 }) ();
