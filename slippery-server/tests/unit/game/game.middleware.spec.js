@@ -145,5 +145,21 @@ describe('GameMiddleware', function () {
         sinon.assert.callCount(next, 1);
       })
     });
+
+    it('should be able to throw error while fetching game by id', function () {
+      expectedError = ErrorFixture.unknownError;
+
+      fetchGameByIdPromise = Promise.reject(expectedError);
+
+      fetchGameById.withArgs(req.params.GameId).returns(fetchGameByIdPromise);
+
+      GameMiddleware.getGameById(req, res, next);
+      sinon.assert.callCount(fetchGameById, 1);
+
+      return fetchGameByIdPromise.catch(function (error) {
+        expect(error).to.be.a('object');
+        expect(error).to.deep.equal(expectedError);
+      });
+    })
   });
 });
