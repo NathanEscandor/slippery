@@ -98,7 +98,22 @@ describe('GameMiddleware', function () {
         expect(req.response).to.deep.equal(expectedGames);
         sinon.assert.callCount(next, 1);
       });
-
     });
+
+    it('should be able to throw an error while getting all games', function () {
+      expectedError = ErrorFixture.unknownError;
+
+      fetchGamesPromise = Promise.reject(expectedError);
+      fetchGames.returns(fetchGamesPromise);
+
+      GameMiddleware.getGames(req, res, next);
+
+      sinon.assert.callCount(fetchGames, 1);
+
+      return fetchGamesPromise.catch(function (error) {
+        expect(error).to.be.a('object');
+        expect(error).to.deep.equal(expectedError);
+      });
+    })
   });
 });

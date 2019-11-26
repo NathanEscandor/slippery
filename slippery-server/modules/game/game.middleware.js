@@ -24,11 +24,16 @@
 
   function getGames(req, res, next) {
     GameService.fetchGames()
-      .then(success);
+      .then(success)
+      .catch(fail);
 
     function success(data) {
       req.response = data;
       next();
+    }
+
+    function fail(error) {
+      next(error);
     }
   }
 }) ();
