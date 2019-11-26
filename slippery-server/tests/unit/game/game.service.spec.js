@@ -154,5 +154,21 @@ describe('GameService', function () {
           expect(data).to.deep.equal(expectedModifiedGame);
         });
     });
+
+    it('should be able to throw error while updating game', function () {
+      expectedError = ErrorFixture.unknownError;
+      existingGame = GameFixture.createdGame;
+
+      GameModelMock.expects('findByIdAndUpdate')
+        .withArgs(existingGame._id, existingGame, {new: true})
+        .chain('exec')
+        .rejects(expectedError);
+
+      return GameService.updateGame(existingGame._id, existingGame)
+        .catch(function (error) {
+          GameModelMock.verify();
+          expect(error).to.deep.equal(expectedError);
+        })
+    })
   });
 });
