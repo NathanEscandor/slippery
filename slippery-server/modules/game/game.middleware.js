@@ -5,7 +5,8 @@
     addGame: addGame,
     getGames: getGames,
     getGameById: getGameById,
-    modifyGame: modifyGame
+    modifyGame: modifyGame,
+    removeGame: removeGame
   };
   const GameService = require('./game.module')().GameService;
 
@@ -66,6 +67,16 @@
 
     function fail(error) {
       next(error);
+    }
+  }
+
+  function removeGame(req, res, next) {
+    GameService.deleteGame(req.params.gameId)
+      .then(success);
+
+    function success(data) {
+      req.response = data;
+      next();
     }
   }
 }) ();

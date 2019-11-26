@@ -209,4 +209,34 @@ describe('GameMiddleware', function () {
       });
     });
   });
+
+  describe('removeGame', function () {
+    let deleteGame, deleteGamePromise, expectedGame, expectedError;
+
+    beforeEach(function () {
+      deleteGame = sinon.stub(GameService, 'deleteGame');
+    });
+
+    afterEach(function () {
+      deleteGame.restore();
+    });
+
+    it('should remove game', function () {
+      expectedGame = GameFixture.createdGame;
+
+      deleteGamePromise = Promise.resolve(expectedGame);
+
+      deleteGame.withArgs(req.params.gameId).returns(deleteGamePromise);
+
+      GameMiddleware.removeGame(req, res, next);
+
+      sinon.assert.callCount(deleteGame, 1);
+
+      return deleteGamePromise.then(function () {
+        expect(req.response).to.be.a('object');
+        expect(req.response).to.deep.equal(expectedGame);
+        sinon.assert.callCount(next, 1);
+      });
+    });
+  })
 });
