@@ -1,18 +1,18 @@
 'use strict';
 
-let chai = require('chai');
-let expect = chai.expect;
-let sinon = require('sinon');
+const chai = require('chai');
+const expect = chai.expect;
+const sinon = require('sinon');
 
-let mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-let UserModule = require('../../../modules/user/user.module')();
-let UserModel = UserModule.UserModel;
-let UserService = UserModule.UserService;
+const UserModule = require('../../../modules/user/user.module')();
+const UserModel = UserModule.UserModel;
+const UserService = UserModule.UserService;
 
-let Fixtures = require('../../fixtures/fixtures');
-let UserFixture = Fixtures.UserFixture;
-let ErrorFixture = Fixtures.ErrorFixture;
+const Fixtures = require('../../fixtures/fixtures');
+const UserFixture = Fixtures.UserFixture;
+const ErrorFixture = Fixtures.ErrorFixture;
 
 let UserModelMock;
 
