@@ -21,6 +21,10 @@ describe('UserModule', function () {
     it('should confirm that UserMiddleware object exists', function() {
       expect(UserModule().UserMiddleware).to.be.a('object');
     });
+
+    it('should confirm that UserService object exists', function() {
+      expect(UserModule().UserService).to.be.a('object');
+    });
   });
 
 }); 

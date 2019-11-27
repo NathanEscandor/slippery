@@ -6,7 +6,8 @@
   function init() {
     return {
       UserController: require('./user.controller'),
-      UserMiddleware: require('./user.middleware')
+      UserMiddleware: require('./user.middleware'),
+      UserService: require('./user.service')
     }
   }
 }) (); 
