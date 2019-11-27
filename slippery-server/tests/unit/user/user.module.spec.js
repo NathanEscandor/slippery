@@ -12,7 +12,11 @@ describe('UserModule', function () {
 
     it('should confirm that UserModule function returns an object', function () {
       expect(UserModule()).to.be.a('object');
-    })
+    });
+
+    it('should confirm that UserModule function exists', function() {
+      expect(UserModule().UserController).to.be.a('function');
+    });
   });
 
 }); 

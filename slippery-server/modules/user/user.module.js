@@ -4,6 +4,8 @@
   module.exports = init;
 
   function init() {
-    return {}
+    return {
+      UserController: require('./user.controller')
+    }
   }
 }) (); 
