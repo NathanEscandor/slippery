@@ -17,6 +17,10 @@ describe('UserModule', function () {
     it('should confirm that UserModule function exists', function() {
       expect(UserModule().UserController).to.be.a('function');
     });
+
+    it('should confirm that UserMiddleware object exists', function() {
+      expect(UserModule().UserMiddleware).to.be.a('object');
+    });
   });
 
 }); 
