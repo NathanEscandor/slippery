@@ -47,6 +47,21 @@ describe('UserService', function () {
           expect(data).to.deep.equal(expectedCreatedUser);
         });
     });
+
+    it('should be able to throw an error while creating a game', function () {
+      newUser = UserFixture.newUser;
+      expectedError = ErrorFixture.unknownError;
+
+      UserModelMock.expects('create')
+        .withArgs(newUser)
+        .rejects(expectedError);
+
+      return UserService.createUser(newUser)
+        .catch(function (error) {
+          UserModelMock.verify();
+          expect(error).to.deep.equal(expectedError)
+        });
+    });
   });
 
 }); 
