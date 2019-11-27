@@ -3,7 +3,8 @@
 
   module.exports = {
     GameFixture: require('./game/game-fixture'),
-    ErrorFixture: require('./error/error-fixture')
+    UserFixture: require('./user/user-fixture'),
+    ErrorFixture: require('./error/error-fixture'),
   };
   
 }) ();
