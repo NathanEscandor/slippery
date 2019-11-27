@@ -14,7 +14,7 @@ describe('UserModule', function () {
       expect(UserModule()).to.be.a('object');
     });
 
-    it('should confirm that UserModule function exists', function() {
+    it('should confirm that UserController function exists', function() {
       expect(UserModule().UserController).to.be.a('function');
     });
 
