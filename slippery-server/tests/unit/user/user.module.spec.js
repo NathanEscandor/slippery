@@ -25,6 +25,10 @@ describe('UserModule', function () {
     it('should confirm that UserService object exists', function() {
       expect(UserModule().UserService).to.be.a('object');
     });
+
+    it('should confirm that UserModel function exists', function() {
+      expect(UserModule().UserModel).to.be.a('function');
+    });
   });
 
 }); 
