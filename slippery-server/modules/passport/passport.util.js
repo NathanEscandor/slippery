@@ -6,22 +6,17 @@
   };
 
   const bcrypt = require('bcryptjs');
-  const passport = require('passport-local');
+  // const passport = require('passport');
   const passportConfig = require('../../../config/passport/passport-config').passport;
 
   const LocalStrategy = require('passport-local').Strategy;
   const User = require('../user/user.model')
 
-  function init() {
-    const options = {
-      promiseLibrary: require('bluebird'),
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    };
+  function init(passport) {
+    const options = {};
 
-    passport.use(new LocalStrategy (function (username, password, done){
-
-        let query = {username: username};
+    passport.use(new LocalStrategy (function (username, password, done) {
+        let query = {email: username};
         User.findOne(query, function (err, user) {
           if (err) throw err;
 
@@ -38,7 +33,6 @@
             else {
               return done(null, false, {message: 'Incorrect password'});
             }
-
           })
         })
     }));

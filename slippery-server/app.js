@@ -15,9 +15,11 @@ const UserController = require('./modules/user/user.module')().UserController;
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use(passport.initialize());
 app.use(cookieParser());
 
 MongoDBUtil.init();
+PassportUtil.init(passport);
 
 app.use('/games', GameController);
 app.use('/users', UserController);
@@ -26,15 +28,12 @@ app.use('/users', UserController);
 app.post('/login', 
         passport.authenticate('local'), 
         function (req, res) {
-
+            console.warn("AUTHENTICATION SUCCESFUL!");
             //if this gets called, authentication was successful
             res.redirect('/users/' + req.user._id);
         }
 );
-
-
 ////*/
-
 
 app.get('/', function (req, res) {
     var pkg = require(path.join(__dirname, 'package.json'));
@@ -53,14 +52,11 @@ app.use(function (req, res, next) {
 // error handler
 app.use(function (err, req, res, next) {
     // set locals, only providing error in development
-    // console.log(require('util').inspect(err));
-
     if(err.name === 'MongoError') {
         if (err.code === 11000) {
             err.status = 409;
         }
     }
-
 
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -73,7 +69,5 @@ app.use(function (err, req, res, next) {
         error: res.locals.error
     });
 });
-
-
 
 module.exports = app;
