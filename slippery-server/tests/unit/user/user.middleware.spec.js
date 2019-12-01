@@ -68,5 +68,21 @@ describe('UserMiddleware', function () {
         expect(error).to.deep.equal(expectedError);
       });
     });
+
+    it('should throw 409 error if user already exists', function () {
+      expectedError = ErrorFixture.error409;
+
+      createUserPromise = Promise.reject(expectedError);
+      createUser.withArgs(req.body).returns(createUserPromise);
+
+      UserMiddleware.addUser(req, res, next);
+
+      sinon.assert.callCount(createUser, 1);
+
+      return createUserPromise.catch(function (error) {
+        expect(error).to.be.a('object');
+        expect(error.status).to.equal(expectedError.status);
+      });      
+    });
   });
 });

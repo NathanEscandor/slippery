@@ -5,7 +5,8 @@
 
   module.exports = {
     unknownError: require('./error-unknown.json'),
-    error404: require('./error-404.json')
+    error404: require('./error-404.json'),
+    error409: require('./error-409.json')
   };
   
 }) ();
