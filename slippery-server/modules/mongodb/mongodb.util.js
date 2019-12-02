@@ -3,7 +3,6 @@
 
   module.exports = {
     init: init
-    //declare attrs to be exposed to other modules
   };
 
   const mongoose = require('mongoose');
@@ -18,10 +17,6 @@
 
     const connectionString = prepConnectionString(mongodbConfig);
 
-
-    //NJE: I'm doing this as the book showed but I don't super trust it. 
-    //I think I could format this as callbacks instead of promises tho?
-
     mongoose.connect(connectionString, options)
       .then(function (result) {
         console.log("MongoDB connection succesful! -- DB: " + connectionString);
@@ -32,7 +27,6 @@
       });
   }
 
-
   //standard mongodb uri format is:
   //mongodb://username:password@host:port/database?options
   function prepConnectionString(config) {
@@ -42,7 +36,7 @@
       connectionString += config.user + ':' + config.password + '@';
     }
     connectionString += config.server + '/' + config.database;
-    // console.log("connection string: " + connectionString);
+
     return connectionString;
   }
 }) ();

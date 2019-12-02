@@ -8,7 +8,9 @@
 
   const GameMiddleware = require('./game.module')().GameMiddleware;
 
-  router.post('/', 
+  //must be logged in to upload games
+  router.post('/',
+    passport.authenticate('checkToken'),
     GameMiddleware.addGame, 
     function (req, res) {
       res.status(201).json(req.response);
@@ -29,7 +31,7 @@
   );
 
   router.put('/:gameId',
-    // passport.authenticate('checkToken'), //-- THIS WORKS!, have to add jwtkey to tests file
+    passport.authenticate('checkTokenGame'),
     GameMiddleware.modifyGame,
     function (req, res) {
       res.status(200).json(req.response);
@@ -37,6 +39,7 @@
   );
 
   router.delete('/:gameId',
+    passport.authenticate('checkTokenGame'),
     GameMiddleware.removeGame,
     function (req, res) {
       res.status(200).json(req.response);

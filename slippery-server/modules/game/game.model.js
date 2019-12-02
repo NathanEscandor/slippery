@@ -37,6 +37,17 @@
       required: true
     }
   });
+
+  GameSchema.methods.validateCredentials = function (user) {
+    const game = this;
+
+    const creator = (game.createdBy == user._id);
+    const admin = !!(user.roles.admin);
+    
+    const result = (creator || admin);
+
+    return result;
+  }
   
   module.exports = mongoose.model('games', GameSchema);
 }) ();

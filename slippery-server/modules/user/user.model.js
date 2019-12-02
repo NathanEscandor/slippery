@@ -54,13 +54,17 @@
     }
   })
 
-  UserSchema.methods.generateAuthToken =  function () {
+  UserSchema.methods.generateAuthToken = function () {
     const user = this;
     const jwtOptions = {
       expiresIn: "3h"
     };
 
-    const token = jwt.sign({email: user.email}, jwtConfig.secret);
+    const token = jwt.sign(
+      {
+        email: user.email,
+        id: user._id
+      }, jwtConfig.secret);
 
     return token;
   }

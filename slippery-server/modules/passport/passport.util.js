@@ -13,11 +13,13 @@
   const JWTStrategy = require('passport-jwt').Strategy;
   const ExtractJWT= require('passport-jwt').ExtractJwt;
   const User = require('../user/user.model');
+  const Game = require('../game/game.model');
 
   function init(passport) {
     const jwtOptions = {
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey: jwtConfig.secret
+      secretOrKey: jwtConfig.secret,
+      passReqToCallback: true
     };
 
     passport.use('register', new LocalStrategy (function (username, password, done) {
@@ -26,7 +28,6 @@
           if (err) {
             return done(err);
           }
-
           if (!user) {
             return done(null, false, {message: 'User not found'});
           }
@@ -51,7 +52,6 @@
         if (err) {
           return done(err);
         }
-
         if (!user) {
           return done(null, false, {message: 'User not found'});
         }
@@ -81,6 +81,33 @@
           return done(null, false, {message: 'User not found'});
         }
         return done(null, user);
+      });
+    }));
+
+    //used for checking if user has permissions to protected game routes
+    passport.use('checkTokenGame', new JWTStrategy(jwtOptions, function (req, jwtPayload, done) {
+      const userQuery = {email: jwtPayload.email};
+      const gameQuery = {_id: req.params.gameId};
+
+      User.findOne(userQuery, function (err, user) {
+        if (err) {
+          return done(err, false);
+        }
+        if (!user) {
+          return done(null, false, {message: 'User not found'});
+        }
+
+        Game.findOne(gameQuery, function (err, game) {
+          if (err) {
+            return done(err, false);
+          }
+          if (game.validateCredentials(user)) {
+            return done(null, user);
+          }
+          else {
+            return done(null, false, {message: 'Invalid credentials'});
+          }
+        });
       });
     }));
 
