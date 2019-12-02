@@ -31,6 +31,10 @@
     stats: {
       type: Object,
       required: true
+    },
+    createdBy: {
+      type: String,
+      required: true
     }
   });
   

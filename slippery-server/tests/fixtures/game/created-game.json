@@ -1,5 +1,5 @@
 {
-  "_id": "507f1f77bcf86cd799439011",
+  "_id": "937d1g77bcf86cd799439011",
   "name": "mang0 vs Armada",
   "dateCreated": "1574706577252",
   "isDeleted": false,
@@ -8,5 +8,6 @@
   "settings": {"p1": "falco", "p4": "peach"},
   "metadata": {"stage": "battlefield"},
   "stats": {"l-cancel rate": "0.98"},
+  "createdBy": "507f1f77ucf86cd799439011",
   "__v": 0
 }
