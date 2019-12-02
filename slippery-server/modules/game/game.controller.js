@@ -4,6 +4,7 @@
 
   const express = require('express');
   const router = express.Router();
+  const passport = require('passport');
 
   const GameMiddleware = require('./game.module')().GameMiddleware;
 
@@ -20,7 +21,7 @@
     }
   );
 
-  router.get('/:gameId',
+  router.get('/:gameId', 
     GameMiddleware.getGameById,
     function (req, res) {
       res.status(200).json(req.response);
@@ -28,6 +29,7 @@
   );
 
   router.put('/:gameId',
+    // passport.authenticate('checkToken'), //-- THIS WORKS!, have to add jwtkey to tests file
     GameMiddleware.modifyGame,
     function (req, res) {
       res.status(200).json(req.response);
