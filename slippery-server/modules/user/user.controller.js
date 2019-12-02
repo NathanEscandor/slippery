@@ -10,7 +10,8 @@
     UserMiddleware.addUser,
     function (req, res) {
       res.status(201).json(req.response);
-  });
+    }
+  );
 
   module.exports = router;
 }) (); 

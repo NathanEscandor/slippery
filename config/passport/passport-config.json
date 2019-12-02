@@ -1,0 +1,5 @@
+{
+  "passport": {
+    "secret": "passportSecret"
+  }
+}
