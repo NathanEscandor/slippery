@@ -1,13 +1,13 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const passport = require('passport');
 
-var app = express();
+const app = express();
 
-var MongoDBUtil = require('./modules/mongodb/mongodb.module').MongoDBUtil;
+const MongoDBUtil = require('./modules/mongodb/mongodb.module').MongoDBUtil;
 const PassportUtil = require('./modules/passport/passport.module').PassportUtil;
 const GameController = require('./modules/game/game.module')().GameController;
 const UserController = require('./modules/user/user.module')().UserController;
@@ -24,50 +24,48 @@ PassportUtil.init(passport);
 app.use('/games', GameController);
 app.use('/users', UserController);
 
-//*** Dev section
 app.post('/login', 
-        passport.authenticate('local'), 
-        function (req, res) {
-            console.warn("AUTHENTICATION SUCCESFUL!");
-            //if this gets called, authentication was successful
-            res.redirect('/users/' + req.user._id);
-        }
+  passport.authenticate('login'), 
+  function (req, res) {
+    const token = req.user.generateAuthToken();
+    res.status(200).send(token);
+    // res.redirect('/users/' + req.user._id);
+  }
 );
-////*/
 
 app.get('/', function (req, res) {
-    var pkg = require(path.join(__dirname, 'package.json'));
-    res.json({
-        name: pkg.name,
-        version: pkg.version,
-        status: 'up'
-    });
+  var pkg = require(path.join(__dirname, 'package.json'));
+  res.json({
+    name: pkg.name,
+    version: pkg.version,
+    status: 'up'
+  });
 });
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    next(createError(404));
+  next(createError(404));
 });
 
 // error handler
 app.use(function (err, req, res, next) {
-    // set locals, only providing error in development
-    if(err.name === 'MongoError') {
-        if (err.code === 11000) {
-            err.status = 409;
-        }
+  // set locals, only providing error in development
+  if (err.name === 'MongoError') {
+    if (err.code === 11000) {
+      err.status = 409;
     }
+  }
 
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    // render the error page
-    res.status(err.status || 500);
+  // render the error page
+  res.status(err.status || 500);
 
-    res.json({
-        message: res.locals.message,
-        error: res.locals.error
-    });
+  res.json({
+    message: res.locals.message,
+    error: res.locals.error
+  });
 });
 
 module.exports = app;

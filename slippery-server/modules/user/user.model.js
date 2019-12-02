@@ -1,6 +1,9 @@
 (function() {
   const mongoose = require('mongoose');
   const bcrypt = require('bcryptjs');
+  const jwt = require('jsonwebtoken');
+  const jwtConfig = require('../../../config/jwt/jwt-config').jwt;
+
   const Schema = mongoose.Schema;
 
   const UserSchema = new Schema({
@@ -38,7 +41,6 @@
     let user = this;
     //need to add a case for if password is not modified
 
-    //gensalt and hash
     if (user.password) {
       bcrypt.hash(user.password, 10, function (err, hash) {
         if (err) return next(err); 
@@ -47,6 +49,17 @@
       })
     }
   })
+
+  UserSchema.methods.generateAuthToken =  function () {
+    const user = this;
+    const jwtOptions = {
+      expiresIn: "3h"
+    };
+
+    const token = jwt.sign({email: user.email}, jwtConfig.secret);
+
+    return token;
+  }
 
   module.exports = mongoose.model('users', UserSchema);
 }) (); 

@@ -8,25 +8,34 @@
   const bcrypt = require('bcryptjs');
   // const passport = require('passport');
   const passportConfig = require('../../../config/passport/passport-config').passport;
+  const jwtConfig = require('../../../config/jwt/jwt-config').jwt;
 
   const LocalStrategy = require('passport-local').Strategy;
-  const User = require('../user/user.model')
+  const JWTStrategy = require('passport-jwt').Strategy;
+  const ExtractJWT= require('passport-jwt').ExtractJwt;
+  const User = require('../user/user.model');
 
   function init(passport) {
-    const options = {};
+    const jwtOptions = {
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+      secretOrKey: jwtConfig.secret
+    };
 
-    passport.use(new LocalStrategy (function (username, password, done) {
-        let query = {email: username};
+    passport.use('register', new LocalStrategy (function (username, password, done) {
+        const query = {email: username};
         User.findOne(query, function (err, user) {
-          if (err) throw err;
+          if (err) {
+            return done(err);
+          }
 
           if (!user) {
             return done(null, false, {message: 'User not found'});
           }
 
-          //Match password
           bcrypt.compare(password, user.password, function (err, isMatch) {
-            if (err) throw err;
+            if (err) {
+              return done(err);
+            }
             if (isMatch) {
               return done(null, user);
             }
@@ -36,6 +45,48 @@
           })
         })
     }));
+
+    passport.use('login', new LocalStrategy (function (username, password, done) {
+      const query = {email: username};
+      
+      User.findOne(query, function (err, user) {
+        if (err) {
+          return done(err);
+        }
+
+        if (!user) {
+          return done(null, false, {message: 'User not found'});
+        }
+
+        bcrypt.compare(password, user.password, function (err, isMatch) {
+          if (err) {
+            return done(err);
+          }
+          if (isMatch) {
+            const token = user.generateAuthToken();
+            return done(null, user, token);
+          }
+          else {
+            return done(null, false, {message: 'Incorrect password'});
+          }
+        });
+      })
+    }));
+
+    passport.use('checkToken', new JWTStrategy(jwtOptions, function (jwtPayload, done) {
+      const query = {email: jwtPayload.email};
+
+      User.findOne(query, function (err, user) {
+        if (err) {
+          return done(err, false);
+        }
+        if (!user) {
+          return done(null, false, {message: 'User not found'});
+        }
+        return done(null, user);
+      });
+    }));
+
 
     passport.serializeUser(function (user, done) {
       done(null, user.id);
