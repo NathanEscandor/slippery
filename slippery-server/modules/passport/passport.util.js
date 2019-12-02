@@ -6,7 +6,6 @@
   };
 
   const bcrypt = require('bcryptjs');
-  // const passport = require('passport');
   const passportConfig = require('../../../config/passport/passport-config').passport;
   const jwtConfig = require('../../../config/jwt/jwt-config').jwt;
 
@@ -48,7 +47,6 @@
 
     passport.use('login', new LocalStrategy (function (username, password, done) {
       const query = {email: username};
-      
       User.findOne(query, function (err, user) {
         if (err) {
           return done(err);
@@ -75,7 +73,6 @@
 
     passport.use('checkToken', new JWTStrategy(jwtOptions, function (jwtPayload, done) {
       const query = {email: jwtPayload.email};
-
       User.findOne(query, function (err, user) {
         if (err) {
           return done(err, false);
@@ -86,7 +83,6 @@
         return done(null, user);
       });
     }));
-
 
     passport.serializeUser(function (user, done) {
       done(null, user.id);
