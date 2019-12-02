@@ -9,6 +9,7 @@
     "settings": {"p1": "falco", "p4": "peach"},
     "metadata": {"stage": "battlefield"},
     "stats": {"l-cancel rate": "0.98"},
+    "createdBy": "507f1f77ucf86cd799439011",
     "__v": 0
   },
   {
@@ -21,6 +22,7 @@
     "settings": {"p1": "falco", "p3": "puff"},
     "metadata": {"stage": "yoshis"},
     "stats": {"l-cancel rate": "0.98"},
+    "createdBy": "507f1f77ucf86cd799439011",
     "__v": 0
   }
 ]

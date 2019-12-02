@@ -3,5 +3,6 @@
   "email": "kneeper@gunth.com",
   "dateCreated": "1574756527252",
   "tag": "DowntownSasquatch",
-  "password": "PlainText"
+  "password": "PlainText",
+  "roles": ["user", "dev"]
 }

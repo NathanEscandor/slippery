@@ -34,6 +34,10 @@
     dateCreated: { 
       type: Date, 
       default: Date.now,
+    },
+    roles: {
+      type: [ String ],
+      required: true
     }
   });
 
