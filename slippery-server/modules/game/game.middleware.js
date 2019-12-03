@@ -11,7 +11,7 @@
   const GameService = require('./game.module')().GameService;
 
   function addGame(req, res, next) {
-    GameService.createGame(req.body)
+    GameService.createGame(req.body, req.user._id)
       .then(success)
       .catch(fail);
 

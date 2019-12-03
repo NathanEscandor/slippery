@@ -1,5 +1,14 @@
 'use strict';
 
+// const Mongoose = require('mongoose').Mongoose;
+// const Mockgoose = require('mockgoose-fix').Mockgoose;
+// const mongoose = new Mongoose;
+// const mockgoose = new Mockgoose(mongoose);
+// mockgoose.helper.setDbVersion('3.4.3');
+
+// mongoose.Promise = global.Promise;
+// const mockMongoDBURL = 'mongodb://localhost:32768/mockUserDB';
+
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
@@ -15,6 +24,15 @@ const UserFixture = Fixtures.UserFixture;
 const baseUri = '/users';
 
 describe('UserController', function () {
+
+  // before(function (done) {
+  //   mockgoose.prepareStorage().then(function () {
+  //     mongoose.connect(mockMongoDBURL, {}, function (err) {
+  //       done(err);
+  //     });
+  //   })
+  // });
+
   describe("POST " + baseUri, function() {
     it('should add new user', function (done) {
       request(app)

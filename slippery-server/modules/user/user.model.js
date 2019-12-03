@@ -1,5 +1,6 @@
 (function() {
   const mongoose = require('mongoose');
+  mongoose.set('useFindAndModify', false);
   const bcrypt = require('bcryptjs');
   const jwt = require('jsonwebtoken');
   const jwtConfig = require('../../../config/jwt/jwt-config').jwt;
@@ -45,14 +46,48 @@
     let user = this;
     //need to add a case for if password is not modified
 
-    if (user.password) {
+    if (user.password && UserSchema.isModified('password')) {
+      console.log("PASS MODDED");
       bcrypt.hash(user.password, 10, function (err, hash) {
         if (err) return next(err); 
           user.password = hash;
           next();
-      })
+      })      
     }
-  })
+    else {
+      console.log("Password not changed");
+    }
+
+  //   if (this.password && this.password.length > 6 && MYMODEL.isModified('password')) {
+  //     this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
+  //     this.password = this.hashPassword(this.password);
+  //   }
+
+  // next();
+
+
+  //   if (user.password) {
+  //     bcrypt.hash(user.password, 10, function (err, hash) {
+  //       if (err) return next(err); 
+  //         user.password = hash;
+  //         next();
+  //     })
+  //   }
+  });
+
+
+
+  
+  UserSchema.methods.validateCredentials = function (requestor) {
+    const user = this;
+    console.log('in validate credentials');
+    const requestor = (user._id == requestor._id);
+    const admin = !!(requestor.roles.admin);
+
+    const result = (requestor || admin);
+    
+    return result;
+  }
 
   UserSchema.methods.generateAuthToken = function () {
     const user = this;
