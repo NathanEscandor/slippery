@@ -11,7 +11,8 @@
 
   const GameModel = require('./game.module')().GameModel;
 
-  function createGame(game) {
+  function createGame(game, createdBy) {
+    game.createdBy = createdBy;
     return GameModel.create(game);
   }
 

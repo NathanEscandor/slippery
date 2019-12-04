@@ -1,5 +1,6 @@
 (function() {
   const mongoose = require('mongoose');
+  mongoose.set('useFindAndModify', false);
   const bcrypt = require('bcryptjs');
   const jwt = require('jsonwebtoken');
   const jwtConfig = require('../../../config/jwt/jwt-config').jwt;
@@ -43,9 +44,8 @@
 
   UserSchema.pre('save', function(next) {
     let user = this;
-    //need to add a case for if password is not modified
 
-    if (user.password) {
+    if (user.isModified('password') || user.isNew()) {
       bcrypt.hash(user.password, 10, function (err, hash) {
         if (err) return next(err); 
           user.password = hash;
@@ -53,6 +53,16 @@
       })
     }
   })
+
+  UserSchema.methods.validateCredentials = function (requestor) {
+    const user = this;
+    const requestor = (user._id == requestor._id);
+    const admin = !!(requestor.roles.admin);
+
+    const result = (requestor || admin);
+    
+    return result;
+  }
 
   UserSchema.methods.generateAuthToken = function () {
     const user = this;

@@ -71,7 +71,7 @@
       })
     }));
 
-    passport.use('checkToken', new JWTStrategy(jwtOptions, function (jwtPayload, done) {
+    passport.use('checkToken', new JWTStrategy(jwtOptions, function (req, jwtPayload, done) {
       const query = {email: jwtPayload.email};
       User.findOne(query, function (err, user) {
         if (err) {
