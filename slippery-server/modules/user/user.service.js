@@ -22,8 +22,12 @@
     return UserModel.findById(userId);
   }
 
+  // have to call find, set, save to trigger the pre-save document hook
+  // (rather than just using findByIdAndUpdate which only triggers query hooks)
   function updateUser(userId, user) {
-    console.log('user service about to call update');
-    return UserModel.findByIdAndUpdate(userId, user, {new: true});
+    UserModel.findById(userId, function (err, userDoc) {
+      userDoc.set(user);
+      userDoc.save();
+    });
   }
 }) ();
