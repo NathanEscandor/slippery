@@ -31,7 +31,7 @@
   );
 
   router.put('/:gameId',
-    passport.authenticate('checkTokenGame'),
+    passport.authenticate('checkTokenGame', { session: false }),
     GameMiddleware.modifyGame,
     function (req, res) {
       res.status(200).json(req.response);
@@ -39,7 +39,7 @@
   );
 
   router.delete('/:gameId',
-    passport.authenticate('checkTokenGame'),
+    passport.authenticate('checkTokenGame', { session: false }),
     GameMiddleware.removeGame,
     function (req, res) {
       res.status(200).json(req.response);

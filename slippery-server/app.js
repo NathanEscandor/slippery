@@ -25,7 +25,7 @@ app.use('/games', GameController);
 app.use('/users', UserController);
 
 app.post('/login', 
-  passport.authenticate('login'), 
+  passport.authenticate('login', { session: false }), 
   function (req, res) {
     const token = req.user.generateAuthToken();
     res.status(200).send(token);
