@@ -29,6 +29,6 @@
     "node-mocks-http": "^1.8.0",
     "sinon": "^7.5.0",
     "sinon-mongoose": "^2.3.0",
-    "validator": "^12.1.0"
+    "validator": "^13.7.0"
   }
 }
