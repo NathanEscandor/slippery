@@ -24,7 +24,7 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "jsonwebtoken": "^8.5.1",
-    "mocha": "^6.2.2",
+    "mocha": "^10.2.0",
     "mockgoose-fix": "^7.3.6",
     "node-mocks-http": "^1.8.0",
     "sinon": "^7.5.0",
